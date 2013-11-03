@@ -8,6 +8,7 @@
     <script type="text/coffeescript" src="helpers.coffee"></script>
 	<script type="text/coffeescript" src="mayors.coffee"> </script>
 	<script type="text/coffeescript" src="council.coffee"> </script>
+	<script type="text/coffeescript" src="singleRace.coffee"> </script>
 </head>
 <style>
 .container {
@@ -21,7 +22,7 @@
 </style>
 <body>
 
-<div id="bl" style="position: relative; width: 500px; height: 300px;">
+<div id="tl" style="position: relative; width: 500px; height: 300px;">
 	<div id="mayors" class="container"></div>
 	<div id="mc" class="container"></div>
 	<div id="cv" class="container"></div>
@@ -29,27 +30,55 @@
 	<div id="all" class="container"></div>
 </div>
 
+<div id="bl" style="position: relative; width: 500px; height: 300px;">
+	<div id="singleRaceA" class="container"></div>
+	<div id="singleRaceB" class="container"></div>
+</div>
+
 
 
 <script type="text/coffeescript">
 
-cycle = ["mayors", "mc", "cv", "ca", "all"]
-loopPos = 0
 
-swap = (cycleIn, loopPosIn) ->
-		$("#"+cycleIn[loopPosIn]).fadeOut 2000
-		loopPosIn = loopPosIn+1 % cycleIn.length
-		$("#"+cycleIn[loopPosIn]).fadeIn 2000, -> setTimeout (-> swap(cycleIn, loopPosIn)), 2000
+swapper = ->
+	cycleIn = ["mayors", "mc", "cv", "ca", "all"]
+	loopPosIn = 0
+	fadeLength = 2*1000
+	stayLength = 2*1000
+	it = ->
+		$("#"+cycleIn[loopPosIn]).fadeOut fadeLength
+		loopPosIn = (loopPosIn+1)%cycleIn.length
+		$("#"+cycleIn[loopPosIn]).fadeIn fadeLength, -> setTimeout it, stayLength
+	return it
+
+raceSwapper = ->
+	cycleIn = ["singleRaceA", "singleRaceB"]
+	loopPosIn = 0
+	fadeLength = 2*1000
+	stayLength = 2*1000
+	it = ->
+		old = cycleIn[loopPosIn]
+		$("#"+cycleIn[loopPosIn]).fadeOut fadeLength, -> 
+			window.updateRandomRace(old)
+			$("#"+old).hide()
+		loopPosIn = (loopPosIn+1)%cycleIn.length
+		$("#"+cycleIn[loopPosIn]).fadeIn fadeLength, -> setTimeout it, stayLength
+	return it
 
 window.refreshData ->
+	window.updateRandomRace("singleRaceA")
+	window.updateRandomRace("singleRaceB")
 	window.updateMayors("mayors")
 	window.updateCouncil("mc", "MC")
 	window.updateCouncil("cv", "CV")
 	window.updateCouncil("ca", "CA")
 	window.updateCouncil("all")
 	$(".container").hide()
+	$("#singleRaceA").show()
 	$("#mayors").show()
-	setTimeout (-> swap(cycle, loopPos)), 2000
+	setTimeout raceSwapper(), 2000
+	setTimeout swapper(), 2000
+
 
 
 </script>

@@ -51,8 +51,8 @@ window.partyColor = (x) -> parties[window.groupedParty(x)].color
 window.partyLeader = (x) -> parties[window.groupedParty(x)].leader
 
 window.partySort = (key) -> (a,b) ->
-    return -1111111111 if a.party == PROJET
-    return 1111111111 if b.party == PROJET
+    return -1111111111 if a.party in [PROJET, parseInt(PROJET)]
+    return 1111111111 if b.party in [PROJET, parseInt(PROJET)]
     return b[key]-a[key]
 
 window.racesWithin = (margin) -> (v for k,v of window.races when v.marginPct < margin and v.projetTopTwo)
@@ -141,11 +141,11 @@ window.refreshData = (cb) ->
 
 
         mayors = []
-        for {parti, nb_voix_obtenues} in mairie.candidats
+        for c in mairie.candidats
             mayors.push
-                party: parti
+                party: c.parti
                 name: c.prenom+" "+c.nom
-                votes: parseInt c.nb_voix_obtenues
+                votes: c.nb_voix_obtenues
 
         window.boroughs = boroughs
         window.districts = districts

@@ -22,9 +22,9 @@ window.updateCouncil = (id, type) ->
         .text(label)
         .font("#{opts.titleSize}px sans-serif")
 
-    vis.anchor("bottom").add(pv.Label)
-        .text("432/4501")
-        .font("#{opts.footerSize}px sans-serif")
+    #vis.anchor("bottom").add(pv.Label)
+    #    .text("432/4501")
+    #    .font("#{opts.footerSize}px sans-serif")
 
     bars = vis.add(pv.Bar)
         .data(data)
