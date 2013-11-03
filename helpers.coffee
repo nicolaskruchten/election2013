@@ -26,7 +26,11 @@ window.percentString = (numElem, denomElem, key) ->
     num = numElem[key]
     denom = window.sumVal(denomElem, key)
     return "0.0%" if denom == 0 
-    (100*num/denom).toFixed(1)+"%"
+    pct = (100*num/denom)
+    if pct > 10
+        return pct.toFixed(1)+"%"
+    else
+        return ""
 
 window.PROJET = PROJET = "9"
 
@@ -127,6 +131,9 @@ window.refreshData = (cb) ->
                 projetTopTwo: false
                 marginPct: 0
                 projetCandidate: ""
+                participation: parseInt(r.taux_participation)
+                stationsDone: parseInt(r.nb_bureaux_depouilles)
+                stationsTotal: parseInt(r.nb_bureaux_total)
 
             boroughs[r.arrondissement].districtIds.push r.district
             boroughs[r.arrondissement].raceIds.push r.id
@@ -165,12 +172,17 @@ window.refreshData = (cb) ->
                 name: c.prenom+" "+c.nom
                 votes: c.nb_voix_obtenues
 
+        window.stats = 
+            stationsDone: parseInt(mairie.nb_bureaux_depouilles)
+            stationsTotal: parseInt(mairie.nb_bureaux_total)
+            participation: parseInt(r.taux_participation)
+
         window.boroughs = boroughs
         window.districts = districts
         window.races = races
         window.mayors = mayors
 
-        cb()
+        cb() if cb?
 
 
 

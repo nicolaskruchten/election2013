@@ -20,9 +20,10 @@ window.updateRandomRace = (id) ->
         .text(race.shortname)
         .font("#{opts.titleSize}px sans-serif")
 
-    #vis.anchor("bottom").add(pv.Label)
-    #    .text("432/4501")
-    #    .font("#{opts.footerSize}px sans-serif")
+    vis.anchor("bottom").add(pv.Label)
+        .textStyle("grey")
+        .text("bureaux de vote: "+race.stationsDone+" / "+race.stationsTotal+" - taux de participation: "+race.participation+"%")
+        .font("#{opts.footerSize}px sans-serif")
 
     bars = vis.add(pv.Bar)
         .data(data)
@@ -35,10 +36,10 @@ window.updateRandomRace = (id) ->
     bars.anchor("right").add(pv.Label)
         .textStyle("white")
         .text( (d) -> window.percentString(d, data, "votes"))
-        
+
     bars.anchor("left").add(pv.Label)
         .textStyle("white")
-        .text( (d) -> window.addSpaces d.votes)
+        .text( (d) -> if x(d.votes)-x(0) > 30 then window.addSpaces d.votes else "")
 
     bars.anchor("left").add(pv.Label)
         .textAlign( "right")

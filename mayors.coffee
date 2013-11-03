@@ -20,12 +20,13 @@ window.updateMayors = (id) ->
     vis = new pv.Panel().canvas(id).width(w).height(h)
 
     vis.anchor("top").add(pv.Label)
-        .text("Mairie de Montréal")
+        .text("Maire de Montréal")
         .font("#{opts.titleSize}px sans-serif")
 
-    #vis.anchor("bottom").add(pv.Label)
-    #    .text("432/4501")
-    #    .font("#{opts.footerSize}px sans-serif")
+    vis.anchor("bottom").add(pv.Label)
+        .textStyle("grey")
+        .text("bureaux de vote: "+window.stats.stationsDone+" / "+window.stats.stationsTotal+" - taux de participation: "+window.stats.participation+"%")
+        .font("#{opts.footerSize}px sans-serif")
 
     bars = vis.add(pv.Bar)
         .data(data)
@@ -41,7 +42,7 @@ window.updateMayors = (id) ->
 
     bars.anchor("left").add(pv.Label)
         .textStyle("white")
-        .text( (d) -> window.addSpaces d.votes)
+        .text( (d) -> if x(d.votes)-x(0) > 50 then window.addSpaces d.votes else "")
 
     bars.anchor("left").add(pv.Label)
         .textAlign( "right")

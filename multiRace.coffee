@@ -7,9 +7,12 @@ window.updateMultiRace = (id, type, margin) ->
     if type == "within"
         races = window.racesWithin(margin)
         label = "Courses serrées"
-    else
+    else if type == "above"
         races = window.racesAbove(margin)
         label = "Courses en avance"
+    else if type == "change"
+        races = window.racesChanged()
+        label = "Courses changées"
 
     for r in races
         race = []
@@ -26,7 +29,7 @@ window.updateMultiRace = (id, type, margin) ->
     h = div.height()
     w = div.width()
     x = pv.Scale.linear(0, window.maxVal(voteData, "votes")).range(opts.nameSize, w-opts.rightGutter)
-    y = pv.Scale.ordinal(pv.range(data.length)).splitBanded(opts.titleSize+10, h-5-opts.footerSize, 4/5);
+    y = pv.Scale.ordinal(pv.range(data.length)).splitBanded(opts.titleSize+10, h, 4/5);
 
 
     vis = new pv.Panel().canvas(id).width(w).height(h)

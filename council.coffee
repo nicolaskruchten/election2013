@@ -22,9 +22,10 @@ window.updateCouncil = (id, type) ->
         .text(label)
         .font("#{opts.titleSize}px sans-serif")
 
-    #vis.anchor("bottom").add(pv.Label)
-    #    .text("432/4501")
-    #    .font("#{opts.footerSize}px sans-serif")
+    vis.anchor("bottom").add(pv.Label)
+        .textStyle("grey")
+        .text("bureaux de vote: "+window.stats.stationsDone+" / "+window.stats.stationsTotal)
+        .font("#{opts.footerSize}px sans-serif")
 
     bars = vis.add(pv.Bar)
         .data(data)
@@ -33,13 +34,6 @@ window.updateCouncil = (id, type) ->
         .fillStyle(  (d) -> window.parties[d.party].color )
         .left(x(0))
         .width( (d) -> x(d.races)-x(0) )
-
-    #vis.add(pv.Rule)
-    #    .left(x(33))
-    #    .bottom(y(data.length))
-    #    .top(y(0))
-    #    .strokeStyle("grey")
-
 
     bars.anchor("right").add(pv.Label)
         .textStyle("white")
