@@ -40,6 +40,10 @@ window.updateMayors = (id) ->
         .text( (d) -> window.percentString(d, data, "votes"))
 
     bars.anchor("left").add(pv.Label)
+        .textStyle("white")
+        .text( (d) -> window.addSpaces d.votes)
+
+    bars.anchor("left").add(pv.Label)
         .textAlign( "right")
         .textStyle("black")
         .text( (d) ->  window.partyLeader d.party )

@@ -1,3 +1,11 @@
+window.addSpaces = (nStr) ->
+    nStr += ''
+    x = nStr.split('.')
+    x1 = x[0]
+    x2 = if x.length > 1 then  '.' + x[1] else ''
+    rgx = /(\d+)(\d{3})/
+    x1 = x1.replace(rgx, '$1' + ' ' + '$2') while rgx.test(x1)
+    return x1 + x2
 
 window.opts = 
     titleSize: 20
@@ -9,7 +17,7 @@ window.labels =
     CV: "Conseillers de ville"
     CA: "Conseillers d'arrondissement"
     MC: "Maires d'arrondissement"
-    0: "Tout les postes"
+    0: "Tous les postes"
 
 window.maxVal = (objArray, key) -> pv.max( (obj[key] for obj in objArray) )
 window.sumVal = (objArray, key) -> pv.sum( (obj[key] for obj in objArray) )
@@ -42,6 +50,10 @@ window.parties =
     0: 
         name: "Autre"
         leader: "Autre"
+        color: "#ffaaaa"
+    "-1": 
+        name: "Indépendant"
+        leader: "Indépendant"
         color: "#aaaaaa"
 
 window.groupedParty = (x) -> if x not of parties then 0 else x
