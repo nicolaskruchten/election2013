@@ -1,0 +1,51 @@
+<html>
+<head>
+	<title>Élection 2013</title>
+	<meta charset="utf-8"> 
+    <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="coffee-script.js"></script>
+    <script type="text/javascript" src="protovis.min.js"></script>
+    <script type="text/coffeescript" src="helpers.coffee"></script>
+	<script type="text/coffeescript" src="mayors.coffee"> </script>
+	<script type="text/coffeescript" src="council.coffee"> </script>
+</head>
+<style>
+.container {
+	position: absolute; 
+	top:0px; 
+	left: 0px; 
+	width: 100%; 
+	height: 100%; 
+	border: 1px solid white;
+}
+</style>
+<body>
+
+<div id="bl" style="position: relative; width: 500px; height: 300px;">
+	<div id="mayors" class="container"></div>
+	<div id="council" class="container"></div>
+</div>
+
+
+
+<script type="text/coffeescript">
+
+$(".container").hide()
+window.refreshData ->
+
+	#window.updateMayors("mayors")
+	#$("#mayors").show()
+	window.updateCouncil("council")
+	$("#council").show()
+
+->
+
+	swap = (outgoing, incoming) ->
+			$(outgoing).fadeOut 2000
+			$(incoming).fadeIn 2000, -> setTimeout (-> swap(incoming, outgoing)), 2000
+	swap("#mayors", "#council")
+
+</script>
+
+</body>
+</html>
