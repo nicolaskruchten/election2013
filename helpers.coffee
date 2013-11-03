@@ -5,6 +5,12 @@ window.opts =
     nameSize: 125
     rightGutter: 20
 
+window.labels = 
+    CV: "Conseillers de ville"
+    CA: "Conseillers d'arrondissement"
+    MC: "Mairies d'arrondissement"
+    0: "Tout les postes"
+
 window.maxVal = (objArray, key) -> pv.max( (obj[key] for obj in objArray) )
 window.sumVal = (objArray, key) -> pv.sum( (obj[key] for obj in objArray) )
 
@@ -52,6 +58,15 @@ window.partySort = (key) -> (a,b) ->
 window.racesWithin = (margin) -> (v for k,v of window.races when v.marginPct < margin and v.projetTopTwo)
 window.racesAbove = (margin) -> (v for k,v of window.races when v.marginPct > margin and v.leadingParty is parseInt(PROJET))
 
+window.racesByParty = (type) ->
+    races = (v for k,v of window.races when (not type?) or v.type==type)
+    dataDict = {}
+    for r in races
+        p = window.groupedParty(r.leadingParty)
+        dataDict[p] ?= 0
+        dataDict[p] += 1
+    return ( party: k, races: v for k,v of dataDict).sort window.partySort("races")
+
 window.refreshData = (cb) ->
     $.getJSON "media.json", ({arrondissements, districts: districtsIn, mairie, postes}) ->
         boroughs = {}
@@ -93,6 +108,7 @@ window.refreshData = (cb) ->
                 secondVotes: 0
                 projetTopTwo: false
                 marginPct: 0
+                projetCandidate: ""
 
             boroughs[r.arrondissement].districtIds.push r.district
             boroughs[r.arrondissement].raceIds.push r.id
@@ -108,6 +124,8 @@ window.refreshData = (cb) ->
                     votes: c.nb_voix_obtenues
                     margin: c.nb_voix_majorite
 
+                if c.parti is parseInt(PROJET)
+                    races[r.id].projetCandidate = c.prenom+" "+c.nom
                 if c.nb_voix_majorite?
                     races[r.id].leadingVotes = c.nb_voix_obtenues
                     races[r.id].leadingParty = c.parti

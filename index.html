@@ -23,27 +23,34 @@
 
 <div id="bl" style="position: relative; width: 500px; height: 300px;">
 	<div id="mayors" class="container"></div>
-	<div id="council" class="container"></div>
+	<div id="mc" class="container"></div>
+	<div id="cv" class="container"></div>
+	<div id="ca" class="container"></div>
+	<div id="all" class="container"></div>
 </div>
 
 
 
 <script type="text/coffeescript">
 
-$(".container").hide()
+cycle = ["mayors", "mc", "cv", "ca", "all"]
+loopPos = 0
+
+swap = (cycleIn, loopPosIn) ->
+		$("#"+cycleIn[loopPosIn]).fadeOut 2000
+		loopPosIn = loopPosIn+1 % cycleIn.length
+		$("#"+cycleIn[loopPosIn]).fadeIn 2000, -> setTimeout (-> swap(cycleIn, loopPosIn)), 2000
+
 window.refreshData ->
+	window.updateMayors("mayors")
+	window.updateCouncil("mc", "MC")
+	window.updateCouncil("cv", "CV")
+	window.updateCouncil("ca", "CA")
+	window.updateCouncil("all")
+	$(".container").hide()
+	$("#mayors").show()
+	setTimeout (-> swap(cycle, loopPos)), 2000
 
-	#window.updateMayors("mayors")
-	#$("#mayors").show()
-	window.updateCouncil("council")
-	$("#council").show()
-
-->
-
-	swap = (outgoing, incoming) ->
-			$(outgoing).fadeOut 2000
-			$(incoming).fadeIn 2000, -> setTimeout (-> swap(incoming, outgoing)), 2000
-	swap("#mayors", "#council")
 
 </script>
 
