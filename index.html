@@ -10,6 +10,7 @@
 	<script type="text/coffeescript" src="council.coffee"> </script>
 	<script type="text/coffeescript" src="singleRace.coffee"> </script>
 	<script type="text/coffeescript" src="multiRace.coffee"> </script>
+	<script type="text/coffeescript" src="events.coffee"> </script>
 </head>
 <style>
 .container {
@@ -19,6 +20,7 @@
 	width: 100%; 
 	height: 100%; 
 	border: 1px solid white;
+	margin-top: 10px;
 }
 </style>
 <body>
@@ -51,8 +53,8 @@
 </td><td>
 
 	<div id="br" style="position: relative; width: 500px; height: 300px;">
-		<div id="singleRaceC" class="container"></div>
-		<div id="singleRaceD" class="container"></div>
+		<div id="eventsA" class="container"></div>
+		<div id="eventsB" class="container"></div>
 	</div>
 
 </td></tr>
@@ -99,13 +101,13 @@ trCycle =
 	"multiRaceWithin": -> window.updateMultiRace("multiRaceWithin", "within", 0.1)
 
 brCycle = 
-	"singleRaceC": -> window.updateRandomRace("singleRaceC")
-	"singleRaceD": -> window.updateRandomRace("singleRaceD")
+	"eventsA": -> window.updateEvents("eventsA")
+	"eventsB": -> window.updateEvents("eventsB")
 
-setTimeout swapperGen(tlCycle), 1000
-setTimeout swapperGen(blCycle), 4000
-setTimeout swapperGen(trCycle), 7000
-setTimeout swapperGen(brCycle), 10000
+setTimeout swapperGen(tlCycle), 2000
+setTimeout swapperGen(blCycle), 6000
+setTimeout swapperGen(trCycle), 10000
+setTimeout swapperGen(brCycle), 2000
 
 window.refreshData ->
 	for fns in [brCycle, trCycle, tlCycle, blCycle]
@@ -113,7 +115,7 @@ window.refreshData ->
 			v()
 	$(".container").hide()
 
-setInterval window.refreshData, 10000
+setInterval window.refreshData, 2*60*1000
 
 
 

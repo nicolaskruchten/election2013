@@ -32,22 +32,26 @@ window.percentString = (numElem, denomElem, key) ->
     else
         return ""
 
-window.PROJET = PROJET = "9"
+window.PROJET = PROJET = "9" #13
 
 window.parties =
     9: 
+    #13:
         name: "Projet Montréal"
         leader: "Richard BERGERON"
         color: "#78BE20"
-    5: 
+    5:
+    #7: 
         name: "Équipe Denis Coderre"
         leader: "Denis CODERRE"
         color: "#662d91"
-    4: 
+    4:
+    #14: 
         name: "Groupe Mélanie Joly"
         leader: "Mélanie JOLY"
         color: "#fdb813"
-    3: 
+    3:
+    #1: 
         name: "Coalition Montréal"
         leader: "Marcel CÔTÉ"
         color: "#0098ce"
@@ -83,7 +87,27 @@ window.racesByParty = (type) ->
         dataDict[p] += 1
     return ( party: k, races: v for k,v of dataDict).sort window.partySort("races")
 
+window.events = []
+window.eventPointer = 0
+
 window.refreshData = (cb) ->
+    #http://ec2-54-200-15-149.us-west-2.compute.amazonaws.com/events.json
+    $.getJSON "events-exemple.json", ({conseil_ville, conseil_arrondissement, postes}) ->
+        events = []
+        for p in postes when p.parti in [PROJET, parseInt(PROJET)]
+            events.push
+                type: "race"
+                event: p
+        for k, v of conseil_arrondissement
+            events.push
+                type: "borough_council"
+                event: 
+                    name: k
+                    body: v
+        window.eventPointer = 0
+        window.events = events
+
+    #http://ec2-54-200-15-149.us-west-2.compute.amazonaws.com/media.json
     $.getJSON "media.json", ({arrondissements, districts: districtsIn, mairie, postes}) ->
         boroughs = {}
         districts = {}
