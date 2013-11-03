@@ -8,7 +8,7 @@ window.opts =
 window.labels = 
     CV: "Conseillers de ville"
     CA: "Conseillers d'arrondissement"
-    MC: "Mairies d'arrondissement"
+    MC: "Maires d'arrondissement"
     0: "Tout les postes"
 
 window.maxVal = (objArray, key) -> pv.max( (obj[key] for obj in objArray) )
@@ -20,7 +20,7 @@ window.percentString = (numElem, denomElem, key) ->
     return "0.0%" if denom == 0 
     (100*num/denom).toFixed(1)+"%"
 
-PROJET = "9"
+window.PROJET = PROJET = "9"
 
 window.parties =
     9: 
@@ -93,9 +93,15 @@ window.refreshData = (cb) ->
                 races: -> (v for k, v of races when k in @raceIds)
 
         for r in postes
+            shortname = r.nom
+                .replace(" - District électoral", "")
+                .replace("de l'arrondissement", "")
+                .replace("d'arrondissement", "d'arr.")
+                .replace("de la ville", "de ville")
             races[r.id] = 
                 id: r.id
                 name: r.nom
+                shortname: shortname
                 type: r.type
                 boroughId: r.arrondissement
                 borough: -> boroughs[@boroughId]

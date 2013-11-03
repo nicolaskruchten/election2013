@@ -9,6 +9,7 @@
 	<script type="text/coffeescript" src="mayors.coffee"> </script>
 	<script type="text/coffeescript" src="council.coffee"> </script>
 	<script type="text/coffeescript" src="singleRace.coffee"> </script>
+	<script type="text/coffeescript" src="multiRace.coffee"> </script>
 </head>
 <style>
 .container {
@@ -22,6 +23,9 @@
 </style>
 <body>
 
+<table> 
+	<tr><td>
+
 <div id="tl" style="position: relative; width: 500px; height: 300px;">
 	<div id="mayors" class="container"></div>
 	<div id="mc" class="container"></div>
@@ -29,22 +33,35 @@
 	<div id="ca" class="container"></div>
 	<div id="all" class="container"></div>
 </div>
+</td><td>
+<div id="tr" style="position: relative; width: 500px; height: 300px;">
+	<div id="multiRaceWithin" class="container"></div>
+	<div id="multiRaceAbove" class="container"></div>
+</div>
+</td></tr>
+
+<tr><td>
 
 <div id="bl" style="position: relative; width: 500px; height: 300px;">
 	<div id="singleRaceA" class="container"></div>
 	<div id="singleRaceB" class="container"></div>
 </div>
+</td><td>
+
+</td></tr>
+</table>
 
 
 
 <script type="text/coffeescript">
 
 
+fadeLength = 2*1000
+stayLength = 9*1000
+
 swapper = ->
 	cycleIn = ["mayors", "mc", "cv", "ca", "all"]
 	loopPosIn = 0
-	fadeLength = 2*1000
-	stayLength = 2*1000
 	it = ->
 		$("#"+cycleIn[loopPosIn]).fadeOut fadeLength
 		loopPosIn = (loopPosIn+1)%cycleIn.length
@@ -54,8 +71,6 @@ swapper = ->
 raceSwapper = ->
 	cycleIn = ["singleRaceA", "singleRaceB"]
 	loopPosIn = 0
-	fadeLength = 2*1000
-	stayLength = 2*1000
 	it = ->
 		old = cycleIn[loopPosIn]
 		$("#"+cycleIn[loopPosIn]).fadeOut fadeLength, -> 
@@ -65,7 +80,18 @@ raceSwapper = ->
 		$("#"+cycleIn[loopPosIn]).fadeIn fadeLength, -> setTimeout it, stayLength
 	return it
 
+multiRaceSwapper = ->
+	cycleIn = ["multiRaceAbove", "multiRaceWithin"]
+	loopPosIn = 0
+	it = ->
+		$("#"+cycleIn[loopPosIn]).fadeOut fadeLength
+		loopPosIn = (loopPosIn+1)%cycleIn.length
+		$("#"+cycleIn[loopPosIn]).fadeIn fadeLength, -> setTimeout it, stayLength
+	return it
+
 window.refreshData ->
+	window.updateMultiRace("multiRaceAbove", "above", 0.1)
+	window.updateMultiRace("multiRaceWithin", "within", 0.1)
 	window.updateRandomRace("singleRaceA")
 	window.updateRandomRace("singleRaceB")
 	window.updateMayors("mayors")
@@ -74,10 +100,12 @@ window.refreshData ->
 	window.updateCouncil("ca", "CA")
 	window.updateCouncil("all")
 	$(".container").hide()
+	$("#multiRaceAbove").show()
 	$("#singleRaceA").show()
 	$("#mayors").show()
-	setTimeout raceSwapper(), 2000
-	setTimeout swapper(), 2000
+	swapper()()
+	setTimeout multiRaceSwapper(), 3000
+	setTimeout raceSwapper(), 6000
 
 
 
