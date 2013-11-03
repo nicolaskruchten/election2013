@@ -32,7 +32,7 @@ background-position:bottom;
 </style>
 <body>
 
-<table cellpadding=5> 
+<table cellpadding=5 style="width: 1024px; margin: 0 auto;"> 
 	<tr><td>
 
 	<div id="tl" style="position: relative; width: 500px; height: 330px;">
@@ -73,7 +73,7 @@ background-position:bottom;
 
 
 fadeLength = 2*1000
-stayLength = 9*1000
+stayLength = 10*1000
 
 swapperGen = (fns) ->
 	cycleId =[]
@@ -114,7 +114,7 @@ brCycle =
 setTimeout swapperGen(tlCycle), 2000
 setTimeout swapperGen(blCycle), 6000
 setTimeout swapperGen(trCycle), 10000
-setTimeout swapperGen(brCycle), 2000
+setTimeout swapperGen(brCycle), 14000
 
 window.refreshData ->
 	for fns in [brCycle, trCycle, tlCycle, blCycle]

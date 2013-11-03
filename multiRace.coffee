@@ -9,10 +9,7 @@ window.updateMultiRace = (id, type, margin) ->
         label = "Courses serrées"
     else if type == "above"
         races = window.racesAbove(margin)
-        label = "Courses en avance"
-    else if type == "change"
-        races = window.racesChanged()
-        label = "Courses changées"
+        label = "Candidats en voie d'être elus"
 
     for r in races
         race = []
