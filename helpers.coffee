@@ -10,8 +10,10 @@ window.addSpaces = (nStr) ->
 window.opts = 
     titleSize: 20
     footerSize: 15
-    nameSize: 125
+    nameSize: 150
     rightGutter: 20
+    numberLabelFont: "15px sans-serif"
+    nameLabelFont: "15px sans-serif"
 
 window.labels = 
     CV: "Conseillers de ville"
