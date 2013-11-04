@@ -24,7 +24,7 @@ window.updateEvents = (id) ->
 			.text(event.event.prenom+" "+event.event.nom+" "+verb)
 			.font("#{opts.titleSize}px sans-serif")
 
-		vis.add(pv.Panel).bottom(15).height(200).width(150)
+		vis.add(pv.Panel).bottom(25).height(200).width(150)
 			.add(pv.Image).url("imgs/solo/#{event.event.poste_id}.jpg?"+Math.random())
 		vis.render()
 	else 

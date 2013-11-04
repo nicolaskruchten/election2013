@@ -63,6 +63,7 @@ window.updateMultiRace = (id, type, margin) ->
     bars.anchor("left").add(pv.Label)
         .textAlign("right")
         .textStyle("black")
+        .font(opts.nameLabelFont)
         .text(-> if this.index == 0 then races[this.parent.index].projetCandidate else "" );
 
 

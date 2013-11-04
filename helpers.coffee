@@ -66,6 +66,32 @@ window.parties =
         leader: "Indépendant"
         color: "#aaaaaa"
 
+window.parties2009 =
+    9:
+        name: "Projet Montréal"
+        leader: "Richard BERGERON"
+        color: "#78BE20"
+    5: 
+        name: "Équipe Denis Coderre"
+        leader: "Denis CODERRE"
+        color: "#662d91"
+    4: 
+        name: "Groupe Mélanie Joly"
+        leader: "Mélanie JOLY"
+        color: "#fdb813"
+    3: 
+        name: "Coalition Montréal"
+        leader: "Marcel CÔTÉ"
+        color: "#0098ce"
+    0: 
+        name: "Autre"
+        leader: "Autre"
+        color: "#ffaaaa"
+    "-1": 
+        name: "Indépendant"
+        leader: "Indépendant"
+        color: "#aaaaaa"
+
 window.groupedParty = (x) -> if x not of parties then 0 else x
 
 window.partyName = (x) -> parties[window.groupedParty(x)].name
@@ -77,8 +103,15 @@ window.partySort = (key) -> (a,b) ->
     return 1111111111 if b.party in [PROJET, parseInt(PROJET)]
     return b[key]-a[key]
 
-window.racesWithin = (margin) -> (v for k,v of window.races when v.marginPct < margin and v.projetTopTwo)
-window.racesAbove = (margin) -> (v for k,v of window.races when v.marginPct > margin and v.leadingParty is parseInt(PROJET))
+window.racesWithin = (margin) -> 
+    res = (v for k,v of window.races when v.marginPct < margin and v.projetTopTwo)
+    res.sort (a,b) -> a.marginPct - b.marginPct
+    return res.slice(0,5)
+
+window.racesAbove = (margin) -> 
+    res = (v for k,v of window.races when v.marginPct > margin and v.leadingParty is parseInt(PROJET))
+    res.sort (a,b) -> a.marginPct - b.marginPct
+    return res.slice(0,5)
 
 window.racesByParty = (type) ->
     races = (v for k,v of window.races when (not type?) or v.type==type)
@@ -92,25 +125,31 @@ window.racesByParty = (type) ->
 window.events = []
 window.eventPointer = 0
 
+urls = 
+    media: "http://ec2-54-200-15-149.us-west-2.compute.amazonaws.com/media.json"
+    events: "http://ec2-54-200-15-149.us-west-2.compute.amazonaws.com/events.json"
+
+urls2009 = 
+    media: "media.json"
+    events: "events-exemple.json"
+
 window.refreshData = (cb) ->
-    #http://ec2-54-200-15-149.us-west-2.compute.amazonaws.com/events.json
-    $.getJSON "http://ec2-54-200-15-149.us-west-2.compute.amazonaws.com/events.json", ({conseil_ville, conseil_arrondissement, postes}) ->
+    $.getJSON urls.events, ({conseil_ville, conseil_arrondissement, postes}) ->
         events = []
         for p in postes when p.parti in [PROJET, parseInt(PROJET)]
             events.push
                 type: "race"
                 event: p
-        for k, v of conseil_arrondissement
-            events.push
-                type: "borough_council"
-                event: 
-                    name: k
-                    body: v
+        #for k, v of conseil_arrondissement
+        #    events.push
+        #        type: "borough_council"
+        #        event: 
+        #            name: k
+        #            body: v
         window.eventPointer = 0
         window.events = events
 
-    #http://ec2-54-200-15-149.us-west-2.compute.amazonaws.com/media.json
-    $.getJSON "http://ec2-54-200-15-149.us-west-2.compute.amazonaws.com/media.json", ({arrondissements, districts: districtsIn, mairie, postes}) ->
+    $.getJSON urls.media, ({arrondissements, districts: districtsIn, mairie, postes}) ->
         boroughs = {}
         districts = {}
         races = {}
