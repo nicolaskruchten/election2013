@@ -10,7 +10,7 @@ window.addSpaces = (nStr) ->
 window.opts = 
     titleSize: 22
     footerSize: 16
-    nameSize: 200
+    nameSize: 250
     rightGutter: 20
     numberLabelFont: "18px sans-serif"
     nameLabelFont: "18px sans-serif"
@@ -34,26 +34,26 @@ window.percentString = (numElem, denomElem, key) ->
     else
         return ""
 
-window.PROJET = PROJET = "9" #13
+window.PROJET = PROJET = '13'
 
 window.parties =
-    9: 
-    #13:
+    #9: 
+    13:
         name: "Projet Montréal"
         leader: "Richard BERGERON"
         color: "#78BE20"
-    5:
-    #7: 
+    #5:
+    7: 
         name: "Équipe Denis Coderre"
         leader: "Denis CODERRE"
         color: "#662d91"
-    4:
-    #14: 
+    #4:
+    14: 
         name: "Groupe Mélanie Joly"
         leader: "Mélanie JOLY"
         color: "#fdb813"
-    3:
-    #1: 
+    #3:
+    1: 
         name: "Coalition Montréal"
         leader: "Marcel CÔTÉ"
         color: "#0098ce"
@@ -94,7 +94,7 @@ window.eventPointer = 0
 
 window.refreshData = (cb) ->
     #http://ec2-54-200-15-149.us-west-2.compute.amazonaws.com/events.json
-    $.getJSON "events-exemple.json", ({conseil_ville, conseil_arrondissement, postes}) ->
+    $.getJSON "http://ec2-54-200-15-149.us-west-2.compute.amazonaws.com/events.json", ({conseil_ville, conseil_arrondissement, postes}) ->
         events = []
         for p in postes when p.parti in [PROJET, parseInt(PROJET)]
             events.push
@@ -110,7 +110,7 @@ window.refreshData = (cb) ->
         window.events = events
 
     #http://ec2-54-200-15-149.us-west-2.compute.amazonaws.com/media.json
-    $.getJSON "media.json", ({arrondissements, districts: districtsIn, mairie, postes}) ->
+    $.getJSON "http://ec2-54-200-15-149.us-west-2.compute.amazonaws.com/media.json", ({arrondissements, districts: districtsIn, mairie, postes}) ->
         boroughs = {}
         districts = {}
         races = {}
