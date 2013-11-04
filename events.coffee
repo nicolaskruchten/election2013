@@ -9,7 +9,7 @@ window.updateEvents = (id) ->
 		if event.event.evenement == "gagnant"
 			verb = "prend les devants"
 		else
-			verb = "se fair dépasser"
+			return window.updateRandomRace(id)
 		div = $("#"+id)
 		h = div.height()
 		w = div.width()
