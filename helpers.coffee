@@ -12,8 +12,8 @@ window.opts =
     footerSize: 16
     nameSize: 200
     rightGutter: 20
-    numberLabelFont: "16px sans-serif"
-    nameLabelFont: "16px sans-serif"
+    numberLabelFont: "18px sans-serif"
+    nameLabelFont: "18px sans-serif"
 
 window.labels = 
     CV: "Conseillers de ville"
