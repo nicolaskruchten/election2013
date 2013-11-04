@@ -37,11 +37,13 @@ window.updateCouncil = (id, type) ->
 
     bars.anchor("right").add(pv.Label)
         .textStyle("white")
+        .font(opts.numberLabelFont)
         .text( (d) -> d.races)
 
     bars.anchor("left").add(pv.Label)
         .textAlign( "right")
         .textStyle("black")
+        .font(opts.nameLabelFont)
         .text( (d) -> window.parties[d.party].name )
 
     vis.render()

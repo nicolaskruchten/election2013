@@ -35,15 +35,18 @@ window.updateRandomRace = (id) ->
 
     bars.anchor("right").add(pv.Label)
         .textStyle("white")
+        .font(opts.numberLabelFont)
         .text( (d) -> window.percentString(d, data, "votes"))
 
     bars.anchor("left").add(pv.Label)
         .textStyle("white")
+        .font(opts.numberLabelFont)
         .text( (d) -> if x(d.votes)-x(0) > 30 then window.addSpaces d.votes else "")
 
     bars.anchor("left").add(pv.Label)
         .textAlign( "right")
         .textStyle("black")
+        .font(opts.nameLabelFont)
         .text( (d) ->  d.name )
 
     vis.render()
