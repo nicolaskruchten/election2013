@@ -134,6 +134,7 @@ urls2009 =
     events: "events-exemple.json"
 
 window.refreshData = (cb) ->
+    console.log "refreshing", new Date()
     $.getJSON urls.events, ({conseil_ville, conseil_arrondissement, postes}) ->
         events = []
         for p in postes when p.parti in [PROJET, parseInt(PROJET)]
