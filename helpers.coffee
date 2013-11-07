@@ -66,31 +66,6 @@ window.parties =
         leader: "Indépendant"
         color: "#aaaaaa"
 
-window.parties2009 =
-    9:
-        name: "Projet Montréal"
-        leader: "Richard BERGERON"
-        color: "#78BE20"
-    5: 
-        name: "Équipe Denis Coderre"
-        leader: "Denis CODERRE"
-        color: "#662d91"
-    4: 
-        name: "Groupe Mélanie Joly"
-        leader: "Mélanie JOLY"
-        color: "#fdb813"
-    3: 
-        name: "Coalition Montréal"
-        leader: "Marcel CÔTÉ"
-        color: "#0098ce"
-    0: 
-        name: "Autre"
-        leader: "Autre"
-        color: "#ffaaaa"
-    "-1": 
-        name: "Indépendant"
-        leader: "Indépendant"
-        color: "#aaaaaa"
 
 window.groupedParty = (x) -> if x not of parties then 0 else x
 
@@ -126,12 +101,9 @@ window.events = []
 window.eventPointer = 0
 
 urls = 
-    media: "http://ec2-54-200-15-149.us-west-2.compute.amazonaws.com/media.json"
-    events: "http://ec2-54-200-15-149.us-west-2.compute.amazonaws.com/events.json"
-
-urls2009 = 
     media: "media.json"
-    events: "events-exemple.json"
+    events: "events.json"
+
 
 window.refreshData = (cb) ->
     console.log "refreshing", new Date()
