@@ -1,3 +1,7 @@
-Visualization for Montreal's Municipal Election 2013
+Visualization Dashboard for Montreal's Municipal Election 2013
 
-Go see it: http://nicolaskruchten.github.io/election2013/
+It's still up, you can go see it: http://nicolaskruchten.github.io/election2013/
+
+This dashboard was created for the Projet Montréal election night 2013 venue to be projected on the big screen so that attendees could follow election results in near-real-time.
+
+Created in collaboration with Nicolas Marchildon, who took care of the back-end which fetched the data in batches from Election Montreal. See his repo here: https://github.com/elecnix/resultats-mtl
