@@ -36,7 +36,7 @@ window.updateRandomRace = (id) ->
     bars.anchor("right").add(pv.Label)
         .textStyle("white")
         .font(opts.numberLabelFont)
-        .text( (d) -> window.percentString(d, data, "votes"))
+        .text( (d) -> if x(d.votes)-x(0) > 110 then window.percentString(d, data, "votes") else "")
 
     bars.anchor("left").add(pv.Label)
         .textStyle("white")
